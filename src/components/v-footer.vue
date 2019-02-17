@@ -15,9 +15,9 @@ export default {
     return {
       arrNav: [
         { title: "首页", type: "index" },
-        { title: "小V", type: "vGoods" },
         { title: "购物车", type: "goodsCart" },
-        { title: "个人", type: "mine" }
+        { title: "订单", type: "vGoods" },
+        { title: "我的", type: "mine" }
         //{ title: "资讯", type: "news" },
       ]
     };

@@ -5,12 +5,11 @@
     <scroller lock-x :scrollbar-y=false height="-60" use-pullup @on-scroll-bottom="loadMore" v-model="status" ref="scroller">
     
     <div>
-
-    <div class="head white">
+    <!-- <div class="head white">
       <v-swiper :swiper-data="bannerSwipe" />
-    </div>
+    </div> -->
     
-    <div class="pdt10 bg-gray1" v-if="vAreaList">
+    <!-- <div class="pdt10 bg-gray1" v-if="vAreaList">
       <div class="brand pd15 mb10" v-for="vList in vAreaList">
         <div class="vAreaContent pda15 bg-white">
         <div class="vArea justify-content-space-between">
@@ -26,7 +25,7 @@
         </div>
        </div>
       </div>
-    </div>
+    </div> -->
 
     <div class="newListData pd15 bg-white" v-if="newListData">
        <router-link class="relative item pdtb15 justify-content-space-between" :to="{path:'/goods', query:{id:item.id}}" v-for="(item, index) in newListData" :key="index">
