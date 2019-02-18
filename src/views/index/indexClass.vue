@@ -5,10 +5,10 @@
       <tab-item class="vux-center" :selected="onTab === item.id" v-for="(item, index) in listFun" @on-item-click="onTabClick(item)" :key="index">{{item.className}}</tab-item>
     </tab>-->
     <header class="header">
-      <p class="address">深圳</p>
-      <p class="title">附近商家</p>
+      <div class="left-arrow" @click="back()"></div>
+      <p class="title">{{navLists[id]['title']}}</p>
       <router-link to="#" class="search">
-        <img src="../assets/images/index/search.png" alt="搜索">
+        <img src="../../assets/images/index/search.png" alt="搜索">
       </router-link>
     </header>
 
@@ -22,14 +22,14 @@
       :pullup-config="pullupConfig"
     >
       <div>
-        <swiper class="nav-swiper">
-          <swiper-item v-for="(navItem, index) of navLists" :key="index">
-            <router-link :to="item.href + '/' + itemIndex" v-for="(item, itemIndex) of navItem" :key="itemIndex">
-              <img :src="item.icon" :alt="item.title">
-              <p>{{item.title}}</p>
-            </router-link>
-          </swiper-item>
-        </swiper>
+        <scroller lock-y :scrollbar-x=false>
+            <div class="box1">
+                <router-link :to="item.href" class="box1-item" v-for="(item, index) of navLists" :key="index" :class="index ==1? 'active':''">
+                    <!-- <img :src="item.icon" :alt="item.title"> -->
+                    <p>{{item.title}}</p>
+                </router-link>
+            </div>
+        </scroller>
         <section class="shop-lists">
           <router-link class="shop-item" to v-for="(item, index) in shopLists" :key="index">
             <img class="shop-img" :src="item.img" :alt="item.title">
@@ -40,18 +40,18 @@
                 <p class="shop-class">{{item.class}}</p>
                 <p class="shop-rate">
                   <section class="star">
-                    <img src="../assets/images/index/star.png" alt="★">
-                    <img src="../assets/images/index/star.png" alt="★">
-                    <img src="../assets/images/index/star.png" alt="★">
-                    <img src="../assets/images/index/star.png" alt="★">
-                    <img src="../assets/images/index/star.png" alt="★">
+                    <img src="../../assets/images/index/star.png" alt="★">
+                    <img src="../../assets/images/index/star.png" alt="★">
+                    <img src="../../assets/images/index/star.png" alt="★">
+                    <img src="../../assets/images/index/star.png" alt="★">
+                    <img src="../../assets/images/index/star.png" alt="★">
                   </section>
                   <section class="star-c" v-bind:style="{width: item.rate*.365+'rem'}">
-                    <img src="../assets/images/index/star-c.png" alt="★">
-                    <img src="../assets/images/index/star-c.png" alt="★">
-                    <img src="../assets/images/index/star-c.png" alt="★">
-                    <img src="../assets/images/index/star-c.png" alt="★">
-                    <img src="../assets/images/index/star-c.png" alt="★">
+                    <img src="../../assets/images/index/star-c.png" alt="★">
+                    <img src="../../assets/images/index/star-c.png" alt="★">
+                    <img src="../../assets/images/index/star-c.png" alt="★">
+                    <img src="../../assets/images/index/star-c.png" alt="★">
+                    <img src="../../assets/images/index/star-c.png" alt="★">
                   </section>
                   <span>{{item.rate}}</span>
                 </p>
@@ -64,12 +64,7 @@
         </section>
       </div>
     </scroller>
-
-    <!-- <swiper v-model="index" height="100%" :show-dots="false">
-      <indexNew  v-if="onTab===0" />
-      <tabContent v-else :parentId="onTab" />
-    </swiper>-->
-    <v-footer active="index"/>
+    <!-- <v-footer active="index"/> -->
     <v-wechatshare :friendShare="weChatShare"/>
   </div>
 </template>
@@ -82,6 +77,7 @@ import VWechatshare from "@/components/v-wechatshare";
 import { Tab, TabItem, Swiper, SwiperItem, Scroller } from "vux";
 import { mapState } from "vuex";
 export default {
+    props:['id'],
   data() {
     return {
       listFun: [1, 2, 3, 4, 5, 6],
@@ -98,7 +94,7 @@ export default {
       },
       shopLists: [
         {
-          img: require("../assets/images/index/shopImg.jpg"),
+          img: require("../../assets/images/index/shopImg.jpg"),
           title: "姚记客家菜酒楼",
           class: "酒店美食",
           rate: 4.8,
@@ -106,7 +102,7 @@ export default {
           distance: 0.2
         },
         {
-          img: require("../assets/images/index/shopImg.jpg"),
+          img: require("../../assets/images/index/shopImg.jpg"),
           title: "姚记客家菜酒楼",
           class: "酒店美食",
           rate: 2,
@@ -114,7 +110,7 @@ export default {
           distance: 0.2
         },
         {
-          img: require("../assets/images/index/shopImg.jpg"),
+          img: require("../../assets/images/index/shopImg.jpg"),
           title: "姚记客家菜酒楼",
           class: "酒店美食",
           rate: 3.5,
@@ -122,7 +118,7 @@ export default {
           distance: 0.2
         },
         {
-          img: require("../assets/images/index/shopImg.jpg"),
+          img: require("../../assets/images/index/shopImg.jpg"),
           title: "姚记客家菜酒楼",
           class: "酒店美食",
           rate: 4.7,
@@ -131,80 +127,77 @@ export default {
         }
       ],
       navLists: [
-        [
           {
-            icon: require("../assets/images/index/chaoshishangchang.png"),
+            icon: require("../../assets/images/index/chaoshishangchang.png"),
             title: "超市商场",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/meishijiudian.png"),
+            icon: require("../../assets/images/index/meishijiudian.png"),
             title: "美食酒店",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/fuzhuangxiaoshou.png"),
+            icon: require("../../assets/images/index/fuzhuangxiaoshou.png"),
             title: "服装销售",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/shoujijiadian.png"),
+            icon: require("../../assets/images/index/shoujijiadian.png"),
             title: "手机家电",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/jiajujiafang.png"),
+            icon: require("../../assets/images/index/jiajujiafang.png"),
             title: "家居家纺",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/wujinjiancai.png"),
+            icon: require("../../assets/images/index/wujinjiancai.png"),
             title: "五金建材",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/yinpindian.png"),
+            icon: require("../../assets/images/index/yinpindian.png"),
             title: "饮品店",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/lirenbaojian.png"),
+            icon: require("../../assets/images/index/lirenbaojian.png"),
             title: "丽人保健",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/pinpaiqiye.png"),
+            icon: require("../../assets/images/index/pinpaiqiye.png"),
             title: "品牌企业",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/zhubaoshoushi.png"),
+            icon: require("../../assets/images/index/zhubaoshoushi.png"),
             title: "珠宝首饰",
-            href: "indexClass"
-          }
-        ],
-        [
+            href: "/"
+          },
           {
-            icon: require("../assets/images/index/bianlidian.png"),
+            icon: require("../../assets/images/index/bianlidian.png"),
             title: "便利店",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/bianminfuwu.png"),
+            icon: require("../../assets/images/index/bianminfuwu.png"),
             title: "便民服务",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/qichexiuli.png"),
+            icon: require("../../assets/images/index/qichexiuli.png"),
             title: "汽车修理",
-            href: "indexClass"
+            href: "/"
           },
           {
-            icon: require("../assets/images/index/xiuxianyule.png"),
+            icon: require("../../assets/images/index/xiuxianyule.png"),
             title: "休闲娱乐",
-            href: "indexClass"
+            href: "/"
           }
-        ]
+        
       ]
     };
   },
@@ -241,6 +234,10 @@ export default {
         }, 100);
       }, 1000);
     },
+    // 路由后退方法
+    back() {
+        this.$router.go(-1)
+    },
     onTabClick(item) {
       this.onTab = item.id;
       console.log(this.onTab);
@@ -274,7 +271,7 @@ export default {
 };
 </script> 
 <style lang="stylus">
-@import '../assets/css/index';
+@import '../../assets/css/index';
 
 #index21 {
   color: #282828;
@@ -294,43 +291,38 @@ export default {
     margin-bottom: .2rem;
   }
 
-  .nav-swiper {
-    height: 4rem;
-    background-color: #fff;
-    margin-top: .2rem;
-  }
-
-  .vux-slider > .vux-indicator > a > .vux-icon-dot, .vux-slider .vux-indicator-right > a > .vux-icon-dot, .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active {
-    width: 6.667vw;
-    height: 0.6667vw;
-  }
-
-  .vux-slider > .vux-indicator > a > .vux-icon-dot.active, .vux-slider .vux-indicator-right > a > .vux-icon-dot.active {
-    background-color: #FF4F00;
-  }
-
-  .vux-slider > .vux-indicator, .vux-slider .vux-indicator-right {
-    right: 41.5vw;
-  }
-
-  .vux-slider > .vux-swiper > .vux-swiper-item > a {
-    width: 20%;
-    height: 50%;
-    display: inline-flex;
-    flex-direction: column;
+  
+.box1 {
+    display: flex;
+    height: .8rem;
+    float: left;
     justify-content: center;
     align-items: center;
-  }
-
-  .vux-slider > .vux-swiper > .vux-swiper-item > a > img {
-    width: 0.84rem;
-    height: 0.84rem;
-    margin-bottom: 0.1rem;
-  }
-
-  .vux-slider > .vux-swiper {
-    overflow-y: scroll;
-  }
+    background-color: #fff;
+    margin-top: .2rem;
+    padding: 0 0.2rem;
+    border-bottom: 1px solid #F4F6F5;
+    
+    .box1-item {
+        width: 1rem;
+        text-align: center;
+        padding: 0 .15rem;
+        box-sizing: content-box;
+    }
+    .box1-item.active {
+        color: #FF4F00;
+        position: relative;
+    }
+    .box1-item.active::after{
+        position: absolute;
+        bottom: -0.05rem;
+        left: .15rem;
+        width: 1rem;
+        height: 2px;
+        background-color: #FF4F00;
+        content:"";
+    }
+}
 
   .shop-lists {
     background-color: #fff;

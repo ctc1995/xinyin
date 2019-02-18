@@ -5,7 +5,9 @@ Vue.use(Router);
 // 页面路由 ---------------------------------------
 // 首页 --------------------------------
 const index = () =>
-  import ('@/views/index'); // 首页
+import ('@/views/index'); // 首页
+const indexClass = () =>
+  import ('@/views/index/indexClass'); // 附近-分类
   // 首页 --------------------------------
 const vGoods = () =>
   import ('@/views/vGoods/index'); // 小V
@@ -88,19 +90,17 @@ const register = () =>
 const findPwd = () =>
   import ('@/views/mine/findPwd'); // 找回密码
 
-const test = () =>
-  import ('@/views/goods/test'); // 找回密码
-
 
 // 路由加载 --------------------------------------
 const router = new Router({
   // mode: "history",
   routes: [
     
-    // 主页路由
+    // 附近分类
     {
-      path: '/test',
-      component: test
+      path: '/indexClass/:id',
+      component: indexClass,
+      props: true 
     },
     {
       path: '*',
